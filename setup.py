@@ -1,6 +1,7 @@
 from setuptools import setup, find_packages
+import eden_client_api as api
 
-setup(name='eden client  sdk', version='0.1.1', description='eden client sdk',  author='Jacki.heo', author_email='jacki.heo@edenchain.io', license='MIT', packages= find_packages() , 
+setup(name='edenchain-client-sdk', version=api.__version__, description='edenchain client sdk',  author='Edenpartners', author_email='tech@edenchain.io', license='MIT', packages= find_packages() , 
         install_requires=[
             'requests',
             'base58',
@@ -8,5 +9,13 @@ setup(name='eden client  sdk', version='0.1.1', description='eden client sdk',  
             'python-rapidjson',
             'pysha3',
             'eth_account'
+        ],
+        py_modules=['eden_client_api'],
+        keyword=['edenchain','api','sdk'],
+        classifiers=[
+            'Development Status :: 3 - Alpha',
+            'Intended Audience :: Developers',
+            'Programming Language :: Python :: 3',
+            'License :: OSI Approved :: MIT License',
         ],
         zip_safe=False)

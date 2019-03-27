@@ -1,16 +1,8 @@
-# edenchain_sdk
+# EdenChain Client SDK for Python
 
-#### 1. Install
 
+#### Quick Start
 ```
-python3 -m venv venv
-source venv/bin/activate
-pip install -r requirements.txt
-```
-
-#### 2. UnitTest
-```
-python apitest.py
-
+pip install edenchain-client-sdk
 ```
 
