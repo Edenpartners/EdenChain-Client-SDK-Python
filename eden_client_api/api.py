@@ -378,24 +378,3 @@ class EdenClientApi:
         else:
             return False
 
-
-
-    def get_encoding(self, msg, from_encoding='base64', to_encoding='base58'):
-
-        # Encoding check.
-
-        if from_encoding == 'base64':
-            missing_padding = len(msg) % 4
-            if missing_padding != 0:
-                msg += b'='* (4 - missing_padding)
-            data = base64.b64decode(msg)
-        elif from_encoding == 'base58':
-            data = base58.b58decode(msg)
-        else:
-            return None
-
-        if to_encoding == 'base64':
-            return base64.b64encode(data)
-        elif to_encoding == 'base58':
-            return base58.b58encode(data)
-        return None
