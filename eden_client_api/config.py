@@ -9,8 +9,8 @@ class EdenConfig:
             {
             },
             {
-                'api_key': 'AIzaSyAxk1aIqRAd4hiaOPHexj3vFXo0gmeEDDE',
-                'api_end_point': 'https://104.197.252.130/api'
+                'api_key': 'AIzaSyCxBr_r3Q7d2letGIezVoO0cah0TtdZSeA',
+                'api_end_point': 'https://api-ep-br.edenchain.io/api'
             }
         ]
 

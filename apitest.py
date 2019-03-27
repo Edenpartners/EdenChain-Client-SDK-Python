@@ -28,7 +28,7 @@ class TestSDKApi(unittest.TestCase):
 ### Setup
     def setUp(self):
         self.startTime = time.time()
-        self.api =  EdenClientApi(EdenClientApi.EDEN_PROTOTYPE_NETWORK)
+        self.api =  EdenClientApi(EdenClientApi.EDENCHAIN_BETA_RELEASE)
         self.token = self.api.authenticate_user(os.environ['AUTH_USER'], os.environ['AUTH_PASSWORD'])        
 
     def tearDown(self):
@@ -40,6 +40,7 @@ class TestSDKApi(unittest.TestCase):
         """ User's token is valid or not check"""
         # Create test, delete it first.        
         self.assertEqual(self.api.is_token_valid(self.token),True)
+
 
     def test_get_balance(self):
         """ Get Current Balance """
@@ -67,10 +68,10 @@ class TestSDKApi(unittest.TestCase):
         self.assertIsNotNone(address)
 
     def test_add_eth_addres(self):
-        self.assertEqual(self.api.add_eth_address(self.token,'0x7ab5e1487bb8ff6353778edca5745c0421df9df825862fca01a36b582f3b8a88'),True)
+        self.assertEqual(self.api.add_eth_address(self.token,os.environ['ETH_PRIVATE_KEY']),True)
 
     def test_del_eth_addres(self):
-        self.assertEqual(self.api.del_eth_address(self.token,'0x7ab5e1487bb8ff6353778edca5745c0421df9df825862fca01a36b582f3b8a88'),True)
+        self.assertEqual(self.api.del_eth_address(self.token,os.environ['ETH_PRIVATE_KEY']),True)
 
 
 #### Async API test.

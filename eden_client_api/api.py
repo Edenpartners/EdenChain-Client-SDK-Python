@@ -32,6 +32,7 @@ def requestsPost(url='', data ='' ):
 
 
 # Json RPC Request Methods
+API_SIGN_IN_USER  = 'user.signin'
 API_GET_USER_INFO='user.get_info'
 API_GET_USER_BALANCE ='user.getbalance'
 API_GET_USER_TRANSACTION='user.lstransaction'
@@ -49,8 +50,9 @@ API user sdk default class
 class EdenClientApi:
     
     # Network Constant
-    EDEN_MAINNET_NETWORK = 0
-    EDEN_PROTOTYPE_NETWORK = 1
+    EDENCHAIN_MAINNET_NETWORK = 0
+    EDENCHAIN_BETA_RELEASE = 1
+    EDENCHAIN_CANDIDATE_RELEASE = 2
 
     def __init__(self, network):
         (result, config) = EdenConfig().getConfig(network)
@@ -77,7 +79,40 @@ class EdenClientApi:
         auth_url = 'https://www.googleapis.com/identitytoolkit/v3/relyingparty/verifyPassword?key='+self.config['api_key']
         user_auth = requests.post( auth_url, data=json.dumps(payload)).json()
         token=user_auth['idToken']
-        return token
+
+        if token is None or token == '':
+            return None
+
+        if self.sign_in_user(token):
+            return token
+
+        return None
+
+    """
+        Sign In
+    """
+    async def sign_in_user_async(self, token):
+        res = await asyncio.get_event_loop().run_in_executor(None, self.sign_in_user,  token)
+        return res
+
+
+    def sign_in_user(self, token=''):
+
+        payload = self.makeJsonRpcRequest(API_SIGN_IN_USER, token)
+        res = requestsPost( self.config['api_end_point'], data=json.dumps(payload))
+
+        if res.status_code != 200:
+            return None
+        
+        data  = res.json()
+ 
+        if data['id'] != payload['id']:
+            return None
+        
+        if data["result"]["err_code"] == 0:
+            return True
+        else:
+            return False
 
     """
         Get user info from IAM
@@ -339,7 +374,7 @@ class EdenClientApi:
             return False
 
         if data["result"]["err_code"] == 0:
-            return True
+            return data["result"]["data"]["txhash"]
         else:
             return False
 
