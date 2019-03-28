@@ -353,11 +353,11 @@ class EdenClientApi:
     """
         Withdraw Etn Token to ERC20
     """
-    async def withdraw_token_async(self, token='',ethaddress='',amount=0):
+    async def withdraw_token_async(self, token='',ethaddress='',amount='0'):
          res = await asyncio.get_event_loop().run_in_executor(None, self.withdraw_token,  token, ethaddress, amount) 
          return res
 
-    def withdraw_token(self,token='', ethaddress='',amount=0):
+    def withdraw_token(self,token='', ethaddress='',amount='0'):
 
         payload = self.makeJsonRpcRequest(API_WITHDRAW_TOKEN, token)
         payload["params"]["ethaddress"] = ethaddress
