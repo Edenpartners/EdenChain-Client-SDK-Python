@@ -41,7 +41,7 @@ API_ADD_ETH_ADDRESS='eth.add_address'
 API_DEL_ETH_ADDRESS='eth.del_address'
 API_DEPOSIT_TOKEN='user.deposit'
 API_WITHDRAW_TOKEN='user.withdraw'
-
+API_TRANSFER_TOKEN='user.transfer'
 
 """ 
 API user sdk default class
@@ -351,7 +351,7 @@ class EdenClientApi:
             return False
 
     """
-        Withdraw Etn Token to ERC20
+        Withdraw TEDN Token to ERC20
     """
     async def withdraw_token_async(self, token='',ethaddress='',amount='0'):
          res = await asyncio.get_event_loop().run_in_executor(None, self.withdraw_token,  token, ethaddress, amount) 
@@ -378,3 +378,31 @@ class EdenClientApi:
         else:
             return False
 
+
+    """
+        Transfer TEDN Token to ERC20
+    """
+    async def transfer_token_async(self, token='',tedn_address='',amount='0'):
+         res = await asyncio.get_event_loop().run_in_executor(None, self.transfer_token,  token, tedn_address, amount) 
+         return res
+
+    def transfer_token(self,token='', tedn_address='',amount='0'):
+
+        payload = self.makeJsonRpcRequest(API_TRANSFER_TOKEN, token)
+        payload["params"]["receive_tedn_address"] = tedn_address
+        payload["params"]["amount"] = amount
+
+        res = requestsPost( self.config['api_end_point'], data=json.dumps(payload))
+
+        if res.status_code != 200:
+            return False        
+        
+        data = res.json()
+
+        if data['id'] != payload['id']:
+            return False
+
+        if data["result"]["err_code"] == 0:
+            return data["result"]["data"]["tx_id"]
+        else:
+            return False

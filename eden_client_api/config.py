@@ -11,7 +11,11 @@ class EdenConfig:
             {
                 'api_key': 'AIzaSyCxBr_r3Q7d2letGIezVoO0cah0TtdZSeA',
                 'api_end_point': 'https://api-ep-br.edenchain.io/api'
-            }
+            },
+            {
+                'api_key': 'AIzaSyCzikLXq4FVcZGRBTIWAZCe_V37ZnbRlww',
+                'api_end_point': 'https://api-ep-cr.edenchain.io/api'
+            },
         ]
 
 
